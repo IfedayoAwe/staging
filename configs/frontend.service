@@ -1,0 +1,20 @@
+# Front-End systemd service to be run on startup
+[Unit]
+Description=Front-End Service
+Wants=network-online.target
+After=network-online.target
+StartLimitIntervalSec=600
+StartLimitBurst=5
+
+[Service]
+Type=exec
+User=dukia_dev
+Group=dukia_dev
+EnvironmentFile=/etc/environment
+WorkingDirectory=/home/dukia_dev/project/frontend
+ExecStart=yarn start
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

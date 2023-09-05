@@ -1,0 +1,21 @@
+# API systemd service to be run on startup
+[Unit]
+Description=API Service
+Wants=network-online.target
+After=network-online.target
+After=postgresql.service
+StartLimitIntervalSec=600
+StartLimitBurst=5
+
+[Service]
+Type=exec
+User=dukia_dev
+Group=dukia_dev
+EnvironmentFile=/etc/environment
+WorkingDirectory=/home/dukia_dev/project/backend
+ExecStart=/home/dukia_dev/project/backend/api
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
